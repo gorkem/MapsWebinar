@@ -6,9 +6,11 @@ import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
 import com.nokia.maps.common.ApplicationContext;
+import com.nokia.maps.common.GeoCoordinate;
 import com.nokia.maps.map.EventListener;
 import com.nokia.maps.map.MapComponent;
 import com.nokia.maps.map.MapDisplay;
+import com.nokia.maps.map.MapStandardMarker;
 
 public class DemoMidlet extends MIDlet {
 
@@ -32,8 +34,15 @@ public class DemoMidlet extends MIDlet {
 		Display display = Display.getDisplay(this);
 		DemoMapCanvas canvas = new DemoMapCanvas(display);
 		display.setCurrent(canvas);		
-		canvas.getMapDisplay().addMapComponent(new DemoEventComponent());
-
+		MapDisplay map = canvas.getMapDisplay();
+		map.addMapComponent(new DemoEventComponent());
+		MapStandardMarker marker = canvas.getMapFactory().createStandardMarker(new GeoCoordinate(41.050359519318874 , 29.028968811035156, 0));
+		marker.setText("Test");
+		marker.setColor(0x99ff0000);
+		map.addMapObject(marker);
+		map.zoomTo(marker.getBoundingBox(),false);
+		
+		
 	}
 
 }
